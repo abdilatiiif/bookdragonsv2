@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import MainSection from './MainSection'
 import NyttIdag from './NyttIdag'
 import Link from 'next/link'
+import Footer from '../footer/footer'
 
 function HeroSection() {
   return (
@@ -33,6 +34,7 @@ function HeroSection() {
       </div>
       <NyttIdag />
       <MainSection />
+      <Footer />
     </div>
   )
 }

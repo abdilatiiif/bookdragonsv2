@@ -1,7 +1,8 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { Navigation } from '@/components/header/Navigation'
-
+import Footer from '@/components/footer/footer'
+import './styles.css'
 export const metadata: Metadata = {
   description: 'Bookdragons - bok for alle',
   title: 'Bookdragonsv2',
@@ -12,9 +13,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body>
+      <body className="flex min-h-screen flex-col">
         <Navigation />
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )
