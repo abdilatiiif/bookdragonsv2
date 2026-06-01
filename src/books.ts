@@ -1,4 +1,23 @@
-export const books = [
+//type definer for books, and a list of books
+
+export interface BookItem {
+  id: number
+  title: string
+  author: string
+  price: number
+  description: string
+  signed: string
+  binding: string
+  language: string
+  genre: string
+  publishedYear: number
+  condition: string
+  stock: number
+  imageUrl: string
+  ageGroup: string
+}
+
+export const books: BookItem[] = [
   {
     id: 9788203190195,
     title: 'Snømannen',
@@ -512,7 +531,7 @@ export const books = [
     ageGroup: 'ungdom',
   },
   {
-    id: 9780141439518,
+    id: 9780141739518,
     title: 'Pride and Prejudice',
     author: 'Jane Austen',
     price: 159,
@@ -816,7 +835,7 @@ export const books = [
     ageGroup: 'barn',
   },
   {
-    id: 9780141439846,
+    id: 9780141439518,
     title: 'Dracula',
     author: 'Bram Stoker',
     price: 169,

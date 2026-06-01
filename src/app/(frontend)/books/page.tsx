@@ -1,9 +1,12 @@
 import { books } from '@/books'
+import BooksList from '@/components/books/BooksList'
 
 function BooksPage() {
-  console.log(books) // Skriv ut bøker i konsollen for å sjekke dataen
-
-  return <div className="pt-20">Books</div>
+  return (
+    <div className="pt-20">
+      <BooksList books={books} />
+    </div>
+  )
 }
 
 export default BooksPage
