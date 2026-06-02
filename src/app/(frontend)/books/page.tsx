@@ -27,10 +27,10 @@ async function BooksPage({ searchParams }: BookPageProps) {
   const startside = (visendeSide - 1) * maksperside
   const kontrollerteBøker = books.slice(startside, startside + maksperside)
 
+  // pagination = kontrollerbøker
   return (
     <div className="pt-20">
-      <BooksList books={kontrollerteBøker} />
-      <div className="mx-auto mt-6 flex w-full max-w-7xl items-center justify-between px-4 pb-12">
+      <div className="mx-auto py-20 flex w-full max-w-7xl items-center justify-between px-2 pb-12">
         <Link
           href={`/books?page=${visendeSide - 1}`}
           aria-disabled={visendeSide <= 1}
@@ -55,6 +55,7 @@ async function BooksPage({ searchParams }: BookPageProps) {
           Neste
         </Link>
       </div>
+      <BooksList books={kontrollerteBøker} />
     </div>
   )
 }

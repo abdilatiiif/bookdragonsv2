@@ -10,9 +10,14 @@ type BookPageProps = {
   }>
 }
 
+const CART_KEY = 'cart' // nøkkel for å lagre handlekurven i localStorage
+
 function BookPage({ params }: BookPageProps) {
   const [book, setBook] = useState<BookItem | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  // reserver bok i handlekurven
+  const [isReserved, setIsReserved] = useState(false)
 
   useEffect(() => {
     let henterData = true
@@ -61,6 +66,40 @@ function BookPage({ params }: BookPageProps) {
 
   if (!book) {
     return <div className="px-4 py-24">Laster bok...</div>
+  }
+
+  function reserverBok() {
+    if (!book) {
+      return
+    }
+
+    try {
+      const lagretKurv = localStorage.getItem(CART_KEY)
+      const dataFraKurv = lagretKurv ? JSON.parse(lagretKurv) : []
+      const varerIKurv = Array.isArray(dataFraKurv) ? dataFraKurv : []
+
+      console.log('Nåværende varer i kurven:', varerIKurv)
+
+      const bokFinnesIKurv = varerIKurv.find((vare) => vare?.id === book.id)
+
+      // Hvis boka allerede er i kurven, øk antallet, ellers legg den til som ny vare
+      const oppdatertKurv = bokFinnesIKurv
+        ? varerIKurv.map((vare) =>
+            vare.id === book.id
+              ? { ...vare, ...book, quantity: (Number(vare.quantity) || 1) + 1 }
+              : vare,
+          )
+        : [...varerIKurv, { ...book, quantity: 1 }]
+
+      localStorage.setItem(CART_KEY, JSON.stringify(oppdatertKurv))
+      setIsReserved(true) // gir tilbakemelding at boka er reservert
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 1000) // oppdaterer kurven etter 1 sekund for å vise endringen
+    } catch {
+      setError('Kunne ikke lagre boka i handlekurven')
+    }
   }
 
   return (
@@ -114,8 +153,12 @@ function BookPage({ params }: BookPageProps) {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 border-t border-black/10 pt-4">
-              <button className="rounded-lg bg-emerald-600 px-5 py-2 font-semibold text-white transition-colors hover:bg-emerald-700">
-                Kjøp nå
+              <button
+                type="button"
+                onClick={reserverBok}
+                className="rounded-lg bg-emerald-600 px-5 py-2 font-semibold text-white transition-colors hover:bg-emerald-700"
+              >
+                Reserver nå
               </button>
               <Link
                 href="/books"
@@ -124,6 +167,12 @@ function BookPage({ params }: BookPageProps) {
                 Tilbake til bøker
               </Link>
             </div>
+
+            {isReserved && (
+              <p className="mt-4 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                Boka er lagt i handlekurven.
+              </p>
+            )}
           </div>
         </div>
       </div>
