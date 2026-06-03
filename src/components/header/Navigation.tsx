@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { NavigationDesktop } from './NavigationDesktop'
 import { NavigationMenuMobile } from './NavigationMenuMobile'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Users } from 'lucide-react'
 
 const CART_KEY = 'cart' // nøkkel for å hente data fra localStorage
 export function Navigation() {
@@ -36,6 +36,12 @@ export function Navigation() {
           )}
         </div>
         <span>Handlekurv</span>
+      </Link>
+      <Link
+        href="/ansatte"
+        className=" absolute left-4 hidden items-center gap-2 rounded-full border border-black/10 bg-white/90 px-4 py-2 text-sm font-semibold shadow-sm transition-colors hover:bg-white md:flex"
+      >
+        <Users className="h-5 w-5" /> Ansatte
       </Link>
 
       <NavigationDesktop />

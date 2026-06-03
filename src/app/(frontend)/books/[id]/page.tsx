@@ -22,23 +22,40 @@ function BookPage({ params }: BookPageProps) {
   useEffect(() => {
     let henterData = true
 
+    // API kall for å hente bokdata basert på ID fra URL-en
     const loadBook = async () => {
       const { id } = await params
+      const encodedId = encodeURIComponent(id) // payload id brukes som url
+
+      console.log('url id fra payload:', encodedId)
 
       try {
-        const response = await fetch(`/api/books/${id}`) // id fra URL-en
-        const result = await response.json()
+        // 1) Prøv lokal kilde først
+        const bookFraLokalfil = await fetch(`/api/store-books/${encodedId}`)
+        if (bookFraLokalfil.ok) {
+          const Lokalbook = await bookFraLokalfil.json()
+          if (henterData) {
+            setBook(Lokalbook.data)
+            setError(null)
+          }
+          return // hvis boka finnes lokalt, trenger vi ikke å sjekke Payload DB
+        }
 
-        if (!response.ok) {
-          throw new Error(result.error || 'Kunne ikke laste bok')
+        // 2) Fallback til Payload DB hvis boka ikke finnes lokalt
+        const payloadBookSjekk = await fetch(`/api/getbookById?id=${encodedId}`)
+        const payloadResult = await payloadBookSjekk.json()
+
+        if (!payloadBookSjekk.ok) {
+          throw new Error(payloadResult.error || 'Kunne ikke laste bok')
         }
 
         if (henterData) {
-          setBook(result.data)
+          setBook(payloadResult.data)
+          setError(null)
         }
       } catch (err) {
         if (henterData) {
-          setError(err instanceof Error ? err.message : 'Ukjent feil')
+          setError(err instanceof Error ? err.message : 'callbackfunksjon feil db')
         }
       }
     }

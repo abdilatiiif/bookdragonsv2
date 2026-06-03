@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     reservations: Reservation;
+    books: Book;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     reservations: ReservationsSelect<false> | ReservationsSelect<true>;
+    books: BooksSelect<false> | BooksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -191,6 +193,28 @@ export interface Reservation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "books".
+ */
+export interface Book {
+  id: number;
+  title: string;
+  author: string;
+  price: number;
+  description: string;
+  signed: 'unsigned' | 'signed';
+  binding: 'pocket' | 'hardcover';
+  language: string;
+  genre: string;
+  publishedYear: number;
+  condition: 'som ny' | 'veldig bra' | 'ok';
+  stock: number;
+  imageUrl: string;
+  ageGroup: 'barn' | 'voksen' | 'ungdom';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -224,6 +248,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reservations';
         value: number | Reservation;
+      } | null)
+    | ({
+        relationTo: 'books';
+        value: number | Book;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -321,6 +349,28 @@ export interface ReservationsSelect<T extends boolean = true> {
   totalPrice?: T;
   status?: T;
   dato?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "books_select".
+ */
+export interface BooksSelect<T extends boolean = true> {
+  id?: T;
+  title?: T;
+  author?: T;
+  price?: T;
+  description?: T;
+  signed?: T;
+  binding?: T;
+  language?: T;
+  genre?: T;
+  publishedYear?: T;
+  condition?: T;
+  stock?: T;
+  imageUrl?: T;
+  ageGroup?: T;
   updatedAt?: T;
   createdAt?: T;
 }

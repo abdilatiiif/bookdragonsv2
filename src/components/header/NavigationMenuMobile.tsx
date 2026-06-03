@@ -29,6 +29,7 @@ export function NavigationMenuMobile() {
   const navLinks = [
     { title: 'Hjem', href: '/' },
     { title: 'Bøker', href: '/books' },
+    { title: 'Ansatte', href: '/ansatte' },
   ]
 
   // sheet fra shadcn ui, som er en mobil meny som kommer inn fra høyre
@@ -62,7 +63,7 @@ export function NavigationMenuMobile() {
                 href="/cart"
                 className="flex items-center w-full border-2 rounded-lg p-2 bg-blue-200 transition-all relative"
               >
-                <ShoppingCart className="w-4 h-4 mr-2" />
+                <ShoppingCart className="w-4 h-4 mr-2" /> Handlekurv
               </Link>
             </AccordionContent>
           </AccordionItem>

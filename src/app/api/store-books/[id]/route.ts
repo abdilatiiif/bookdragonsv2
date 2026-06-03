@@ -6,6 +6,8 @@ type RouteContext = {
   }>
 }
 
+// henter bøker lokalt fra src/books.ts, som er en statisk fil med bokdata.
+
 export async function GET(_request: Request, context: RouteContext) {
   const { id } = await context.params
   const parsedId = Number(id)
