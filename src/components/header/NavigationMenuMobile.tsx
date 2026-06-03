@@ -1,7 +1,6 @@
 'use client'
 
 import 'animate.css'
-import { useRouter } from 'next/navigation'
 
 import {
   Accordion,
@@ -75,7 +74,7 @@ export function NavigationMenuMobile() {
           </SheetClose>
 
           <p className="text-sm text-center text-muted-foreground mt-4">
-            © 2025 BookDragons -Eksamen. All rights reserved. Latif Hassan
+            © 2026 BookDragonsv2 -Eksamen. All rights reserved. Latif Hassan
           </p>
         </SheetFooter>
       </SheetContent>

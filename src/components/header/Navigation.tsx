@@ -23,22 +23,21 @@ export function Navigation() {
 
   return (
     <div className="allPages fixed inset-x-0 top-0 z-50 flex h-20 items-center justify-center">
-      {vareAntall > 0 && (
-        <Link
-          href="/cart"
-          className="absolute right-4 hidden items-center gap-2 rounded-full border border-black/10 bg-white/90 px-4 py-2 text-sm font-semibold shadow-sm transition-colors hover:bg-white md:flex"
-        >
-          <div className="relative">
-            <ShoppingCart className="h-5 w-5" />
-            {vareAntall > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-emerald-600 px-1 text-[11px] text-white">
-                {vareAntall}
-              </span>
-            )}
-          </div>
-          <span>Handlekurv</span>
-        </Link>
-      )}
+      <Link
+        href="/cart"
+        className="absolute right-4 hidden items-center gap-2 rounded-full border border-black/10 bg-white/90 px-4 py-2 text-sm font-semibold shadow-sm transition-colors hover:bg-white md:flex"
+      >
+        <div className="relative">
+          <ShoppingCart className="h-5 w-5" />
+          {vareAntall > 0 && (
+            <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-emerald-600 px-1 text-[11px] text-white">
+              {vareAntall}
+            </span>
+          )}
+        </div>
+        <span>Handlekurv</span>
+      </Link>
+
       <NavigationDesktop />
       <NavigationMenuMobile />
     </div>

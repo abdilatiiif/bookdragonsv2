@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 type OrderForm = {
   firstName: string
@@ -31,16 +32,17 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
     email: '',
     phone: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [reservert, setReservert] = useState(false)
   const [feilMelding, setFeilMelding] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const tømkurvHandler = () => {
     tømkurv()
   }
 
   // innsending av bestilling
-  function onSubmitOrder(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function onSubmitOrder(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     if (!items.length) return
 
     const epostOk = form.email.includes('@')
@@ -63,9 +65,40 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
     }
 
     setFeilMelding('')
-    setSubmitted(true)
-    setForm({ firstName: '', lastName: '', email: '', phone: '' })
-    tømkurvHandler()
+
+    // API kall for å opprette reservasjon i Payload CMS
+    setIsSubmitting(true)
+
+    const dato = new Date().toISOString()
+
+    const response = await fetch('/api/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        phone: form.phone,
+        items,
+        totalItems,
+        totalPrice,
+        dato,
+      }),
+    })
+
+    // feil innsending av bestilling
+    setIsSubmitting(false)
+    if (!response.ok) {
+      setFeilMelding('Kunne ikke sende bestillingen. Prøv igjen.')
+      return
+    }
+
+    setReservert(true) // vis bekreftelse
+
+    setForm({ firstName: '', lastName: '', email: '', phone: '' }) // nullstill form
+    tømkurvHandler() // tøm handlekurven
 
     console.log('Bestilling sendt:', {
       firstName: form.firstName,
@@ -75,19 +108,19 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
       items,
       totalItems,
       totalPrice,
-    })
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 2000) // oppdaterer kurven etter 2 sekunder for å vise endringen
+      dato,
+    }) // logg bestillingsdata for debugging
   }
 
   return (
     <aside className="h-fit rounded-xl border border-black/10 bg-white p-4 shadow-sm">
-      {submitted && (
+      {reservert && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4">
           <p className="rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-2xl text-emerald-800 shadow-lg">
             Takk for bestillingen. Vi kontakter deg snart.
+            <Link href="/books" className="ml-2 font-semibold text-blue-400 hover:underline">
+              Fortsett å utforske bøker
+            </Link>
           </p>
         </div>
       )}
@@ -119,7 +152,7 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
             id="firstName"
             required
             value={form.firstName}
-            onChange={(event) => setForm((prev) => ({ ...prev, firstName: event.target.value }))}
+            onChange={(e) => setForm((prev) => ({ ...prev, firstName: e.target.value }))}
             className="w-full rounded-lg border border-black/20 px-3 py-2"
           />
         </div>
@@ -132,7 +165,7 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
             id="lastName"
             required
             value={form.lastName}
-            onChange={(event) => setForm((prev) => ({ ...prev, lastName: event.target.value }))}
+            onChange={(e) => setForm((prev) => ({ ...prev, lastName: e.target.value }))}
             className="w-full rounded-lg border border-black/20 px-3 py-2"
           />
         </div>
@@ -146,7 +179,7 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
             type="email"
             required
             value={form.email}
-            onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+            onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
             className="w-full rounded-lg border border-black/20 px-3 py-2"
           />
         </div>
@@ -160,17 +193,17 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
             type="tel"
             required
             value={form.phone}
-            onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+            onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
             className="w-full rounded-lg border border-black/20 px-3 py-2"
           />
         </div>
 
         <button
           type="submit"
-          disabled={!items.length}
+          disabled={!items.length || isSubmitting}
           className="mt-2 w-full rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Send bestilling
+          {isSubmitting ? 'Sender...' : 'Send bestilling'}
         </button>
       </form>
 

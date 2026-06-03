@@ -34,14 +34,16 @@ export default function Handlekurv() {
   }, [harLastetKurv, items])
 
   // beregninger for total antall varer og total pris
-  let totalItems = 0
-  let totalPrice = 0
-
-  for (const item of items) {
-    const antall = Number(item.quantity) || 1
-    totalItems += antall
-    totalPrice += (Number(item.price) || 0) * antall
-  }
+  const { totalItems, totalPrice } = items.reduce(
+    (sum, item) => {
+      const antall = Number(item.quantity) || 1
+      return {
+        totalItems: sum.totalItems + antall,
+        totalPrice: sum.totalPrice + (Number(item.price) || 0) * antall,
+      }
+    },
+    { totalItems: 0, totalPrice: 0 },
+  )
 
   console.log('Total antall varer i kurven:', totalItems)
   console.log('Total pris for varene i kurven:', totalPrice)

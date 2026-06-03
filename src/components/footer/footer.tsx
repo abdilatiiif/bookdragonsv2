@@ -27,7 +27,7 @@ function Footer() {
         </nav>
 
         <div className="text-center md:text-right">
-          <p>{idag}</p>
+          <p>© 2026 BookDragonsv2 -Eksamen. All rights reserved. Latif Hassan </p>
         </div>
       </div>
     </footer>

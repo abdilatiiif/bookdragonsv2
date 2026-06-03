@@ -27,6 +27,8 @@ async function BooksPage({ searchParams }: BookPageProps) {
   const startside = (visendeSide - 1) * maksperside
   const kontrollerteBøker = books.slice(startside, startside + maksperside)
 
+  console.log('Bøker som vises på denne siden:', kontrollerteBøker)
+
   // pagination = kontrollerbøker
   return (
     <div className="pt-20">
