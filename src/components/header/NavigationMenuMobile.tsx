@@ -1,7 +1,6 @@
 'use client'
 
 import 'animate.css'
-import { useRouter } from 'next/navigation'
 
 import {
   Accordion,
@@ -25,13 +24,8 @@ import {
 } from '@/components/ui/sheet'
 
 import Link from 'next/link'
-import { useState } from 'react'
 
 export function NavigationMenuMobile() {
-  const router = useRouter()
-
-  const [cartCount, setCartCount] = useState(0)
-
   const navLinks = [
     { title: 'Hjem', href: '/' },
     { title: 'Bøker', href: '/books' },
@@ -69,12 +63,6 @@ export function NavigationMenuMobile() {
                 className="flex items-center w-full border-2 rounded-lg p-2 bg-blue-200 transition-all relative"
               >
                 <ShoppingCart className="w-4 h-4 mr-2" />
-                Kurv
-                {cartCount > 5 && (
-                  <span className="ml-auto bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">
-                    {cartCount}
-                  </span>
-                )}
               </Link>
             </AccordionContent>
           </AccordionItem>
@@ -86,7 +74,7 @@ export function NavigationMenuMobile() {
           </SheetClose>
 
           <p className="text-sm text-center text-muted-foreground mt-4">
-            © 2025 BookDragons -Eksamen. All rights reserved. Latif Hassan
+            © 2026 BookDragonsv2 -Eksamen. All rights reserved. Latif Hassan
           </p>
         </SheetFooter>
       </SheetContent>
