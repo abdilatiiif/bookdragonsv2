@@ -99,7 +99,7 @@ function LeggTilBok() {
 
   return (
     <div className="w-full rounded-2xl bg-green-200 p-4">
-      <h2 className="mb-4 text-xl font-semibold">Legg til ny bok</h2>
+      <h2 className="mb-4 text-xl font-semibold">Legg til ny bok 📚</h2>
 
       <form className="grid gap-3" onSubmit={onSubmit}>
         <input

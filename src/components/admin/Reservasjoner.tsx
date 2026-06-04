@@ -59,10 +59,10 @@ function Reservasjoner() {
               <p className="font-semibold">
                 {reservasjon.firstName} {reservasjon.lastName}
               </p>
-              <p className="text-sm">{reservasjon.email}</p>
-              <p className="text-sm">{reservasjon.phone}</p>
+              Epost: <p className="text-sm">{reservasjon.email}</p>
+              Telefon: <p className="text-sm">{reservasjon.phone}</p>
               <p className="text-sm">Antall varer: {reservasjon.totalItems}</p>
-              <p className="text-sm">Total: {reservasjon.totalPrice} kr</p>
+              <p className="text-sm">Total Pris: {reservasjon.totalPrice} kr</p>
               <p className="text-sm">Status: {reservasjon.status}</p>
               <p className="text-sm text-gray-600">
                 Dato: {new Date(reservasjon.dato).toLocaleString('nb-NO')}

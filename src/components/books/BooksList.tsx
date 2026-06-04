@@ -23,7 +23,7 @@ function BooksList({ books }: { books: BookItem[] }) {
       }
     }
 
-    void booksFromPayloadDb()
+    void booksFromPayloadDb() // starter API kall for å hente bøker fra Payload DB, void = ignorerer returnert promise, siden vi ikke trenger å håndtere det her
   }, [])
 
   const payloaddb = [...payloadBooks]
