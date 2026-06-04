@@ -4,7 +4,7 @@ import Link from 'next/link'
 import type { BookItem } from '@/books'
 
 function Book({ book }: { book: BookItem }) {
-  console.log(book.imageUrl)
+  const randomImgsrc = `https://picsum.photos/seed/${book.id}/400/500`
 
   return (
     <div className="mb-6">
@@ -14,7 +14,7 @@ function Book({ book }: { book: BookItem }) {
       >
         <div className="flex flex-col gap-4 md:flex-row">
           <img
-            src={book.imageUrl || `https://picsum.photos/400/500?random=${book.id}`}
+            src={book.imageUrl ?? randomImgsrc}
             alt={book.title}
             className="h-56 w-full rounded-lg object-cover md:w-40"
           />

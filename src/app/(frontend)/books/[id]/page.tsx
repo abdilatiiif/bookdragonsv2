@@ -19,6 +19,7 @@ function BookPage({ params }: BookPageProps) {
   // reserver bok i handlekurven
   const [isReserved, setIsReserved] = useState(false)
 
+  // hente bok basert på id fra URL-en, først prøver vi lokal kilde, så fallback til Payload DB
   useEffect(() => {
     let henterData = true
 

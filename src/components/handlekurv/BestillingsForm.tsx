@@ -40,7 +40,7 @@ function BestillingsForm({ items, totalItems, totalPrice, tømkurv }: Bestilling
     tømkurv()
   }
 
-  // innsending av bestilling
+  // innsending av bestilling med validering og API kall til Payload CMS
   async function onSubmitOrder(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (!items.length) return
