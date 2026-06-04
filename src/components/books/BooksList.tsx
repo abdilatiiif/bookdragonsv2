@@ -6,6 +6,7 @@ import type { BookItem } from '@/books'
 function BooksList({ books }: { books: BookItem[] }) {
   const [payloadBooks, setPayloadBooks] = useState<BookItem[]>([])
 
+  // henter bøker fra Payload CMS db ved første innlastning av komponenten
   useEffect(() => {
     async function booksFromPayloadDb() {
       try {
@@ -30,7 +31,8 @@ function BooksList({ books }: { books: BookItem[] }) {
   return (
     <div className="mx-auto w-full max-w-7xl space-y-10 px-4">
       <section className="rounded-2xl border border-emerald-400 bg-emerald-50/40 p-4 sm:p-6">
-        <h3 className="mb-5 text-2xl font-bold text-green-700">Bøker fra Payload DB</h3>
+        <h3 className="mb-5 text-2xl font-bold text-green-700">Våre nyeste bøker</h3>
+        <h3 className="mb-5 text-sm font-bold text-gray-400">Bøker fra Payload DB</h3>
 
         {!payloaddb.length ? (
           <p className="rounded-lg bg-white px-4 py-3 text-sm text-green-900/80">

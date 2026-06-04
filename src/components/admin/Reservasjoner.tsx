@@ -28,7 +28,6 @@ function Reservasjoner() {
 
         const result = (await response.json()) as { data?: Reservasjon[] }
         setReservasjoner(result.data ?? [])
-        
       } catch {
         setFeil('Kunne ikke hente reservasjoner akkurat nå.')
         setReservasjoner([])
@@ -48,7 +47,7 @@ function Reservasjoner() {
   }
 
   return (
-    <div className="w-full">
+    <div className="p-4 w-full bg-orange-200 rounded-2xl">
       <h2 className="mb-4 text-xl font-semibold">Reservasjoner</h2>
 
       {!reservasjoner.length ? (
