@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         language: Bookbody.language ?? 'bare gud vet',
         genre: Bookbody.genre ?? 'fiction',
         publishedYear: Bookbody.publishedYear ?? new Date().getFullYear(),
-        condition: Bookbody.condition ?? 'bra nok at du kjøper den',
+        condition: Bookbody.condition ?? 'ok',
         stock: Bookbody.stock ?? 1,
         imageUrl: Bookbody.imageUrl ?? 'https://picsum.photos/400/500',
         ageGroup: Bookbody.ageGroup ?? 'voksen',
