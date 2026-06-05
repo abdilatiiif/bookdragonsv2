@@ -163,6 +163,10 @@ Applikasjonen kjører da på `http://localhost:3000`.
 ### 4. Åpne adminpanelet
 
 Gå til `http://localhost:3000/admin`.
+
+epost: latif_1995@test.no
+password: 123456
+
 Ved første oppstart kan Payload be om at første adminbruker opprettes.
 
 ### 5. Tilbake til butikken?
