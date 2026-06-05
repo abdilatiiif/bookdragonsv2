@@ -138,7 +138,7 @@ De viktigste mappene i prosjektet er:
 ### 1. Installer avhengigheter
 
 ```bash
-pnpm install
+
 npm install
 ```
 
@@ -155,7 +155,7 @@ PAYLOAD_SECRET=velg-en-hemmelig-verdi
 ### 3. Start utviklingsserveren
 
 ```bash
-pnpm dev / npm run dev
+npm run dev
 ```
 
 Applikasjonen kjører da på `http://localhost:3000`.
