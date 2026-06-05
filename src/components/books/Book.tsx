@@ -28,10 +28,6 @@ function Book({ book }: { book: BookItem }) {
               Pris: {book.price} kr
             </p>
 
-            <p>
-              <strong>Lager:</strong> {book.stock}
-            </p>
-
             <div className="col-span-full mt-3 flex items-center justify-between gap-3 border-t border-black/10 pt-3">
               <span className="text-md text-red-500 ">{book.stock} på lager</span>
             </div>

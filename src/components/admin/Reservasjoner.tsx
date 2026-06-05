@@ -2,12 +2,20 @@
 
 import { useEffect, useState } from 'react'
 
+type ReservertVare = {
+  id: number
+  title: string
+  price: number
+  quantity?: number
+}
+
 type Reservasjon = {
   id: string
   firstName: string
   lastName: string
   email: string
   phone: string
+  items: ReservertVare[]
   totalItems: number
   totalPrice: number
   status: 'underbehandling' | 'utlevert'
@@ -31,11 +39,12 @@ function Reservasjoner() {
       } catch {
         setFeil('Kunne ikke hente reservasjoner akkurat nå.')
         setReservasjoner([])
+      } finally {
+        setLoading(false)
       }
     }
 
-    hentReservasjoner()
-    setLoading(false)
+    void hentReservasjoner() // unngå "promise not handled"
   }, [])
 
   if (loading) {
@@ -47,8 +56,8 @@ function Reservasjoner() {
   }
 
   return (
-    <div className="p-4 w-full bg-orange-200 rounded-2xl">
-      <h2 className="mb-4 text-xl font-semibold">Reservasjoner</h2>
+    <div className="p-4 w-full bg-gray-200 rounded-2xl text-green-900">
+      <h2 className=" text-xl font-semibold">Reservasjoner</h2>
 
       {!reservasjoner.length ? (
         <p>Ingen reservasjoner funnet.</p>
@@ -61,9 +70,24 @@ function Reservasjoner() {
               </p>
               Epost: <p className="text-sm">{reservasjon.email}</p>
               Telefon: <p className="text-sm">{reservasjon.phone}</p>
-              <p className="text-sm">Antall varer: {reservasjon.totalItems}</p>
               <p className="text-sm">Total Pris: {reservasjon.totalPrice} kr</p>
               <p className="text-sm">Status: {reservasjon.status}</p>
+              <div className="mt-2 rounded-md bg-white/60 p-2">
+                <p className="text-sm font-semibold">Reserverte varer:</p>
+                {reservasjon.items?.length && (
+                  <ul className="mt-1 space-y-1 text-sm">
+                    {reservasjon.items.map((item, index) => {
+                      const antall = Number(item.quantity ?? 1)
+                      const pris = Number(item.price ?? 0)
+                      return (
+                        <li key={`${reservasjon.id}-${item.id}-${index}`}>
+                          {item.title} - {antall} stk - {pris * antall} kr
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </div>
               <p className="text-sm text-gray-600">
                 Dato: {new Date(reservasjon.dato).toLocaleString('nb-NO')}
               </p>
